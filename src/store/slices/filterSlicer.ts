@@ -10,7 +10,7 @@ interface FetchSuccessPayload {
   items: Item[];
   status: number;
   message: string;
-  hasActiveFilters: boolean
+  hasActiveFilters: boolean;
   //totalCount: number;
 }
 
@@ -24,12 +24,14 @@ interface InitData {
   page: number;
   sort: string;
   searchValue: string; 
-  size: string | null;//number
+  size: string | null;
   setSort: string | null;
+  rate: number | null;
   color: string | null;
-  sex: number;//string
+  sex: number;
   isLoading: boolean;
   hasActiveFilters: boolean;
+  fromHome: boolean;
   //totalCount: number;
   response: FilterResponse;
 };
@@ -41,10 +43,12 @@ const initFilter: InitData = {
   searchValue: "",
   size: null,
   setSort: "",
+  rate: null,
   color: null,
   sex: 1,
   isLoading: false, 
   hasActiveFilters: false,
+  fromHome: false,
   //totalCount: 0,
   response: {
     status: 0,
@@ -59,29 +63,28 @@ export const filterSlice = createSlice({
     fetchFilter(state) {
       state.isLoading = true;
     },
+    setHomeRate (state, action: PayloadAction<boolean>) {
+      state.fromHome = action.payload;
+      state.page = 1;
+    },
     setSort(state, action: PayloadAction<string | null>) {
         state.sort = action.payload;
         state.page = 1;
-        //console.log(state.sort);
     },
     setSize(state, action: PayloadAction<string | null>) {
       state.size = action.payload;
       state.page = 1;
-      //console.log(state.size);
     },
     setColor(state, action: PayloadAction<string | null>) {
       state.color = action.payload;
       state.page = 1;
-      //console.log(state.color);
     },
     setSex(state, action: PayloadAction<number>) {
       state.sex = action.payload;
       state.page = 1;
-      //console.log(state.sex);
     },
     setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
-      //console.log(state.page);
     },
     setSearchValue(state, action: PayloadAction<string>) {
         state.searchValue = action.payload;
@@ -91,9 +94,6 @@ export const filterSlice = createSlice({
       state.isLoading = false;
       state.items = action.payload.items;
       state.hasActiveFilters = action.payload.hasActiveFilters;
-      //console.log(state.hasActiveFilters);
-      //state.totalCount = action.payload.totalCount;
-      //console.log(state.totalCount);
       state.response = {
         status: action.payload.status,
         message: action.payload.message,
@@ -113,6 +113,7 @@ export const {
   fetchFilter,
   fetchFilterSuccess,
   fetchFilterError,
+  setHomeRate,
   setSize,
   setColor,
   setSex,

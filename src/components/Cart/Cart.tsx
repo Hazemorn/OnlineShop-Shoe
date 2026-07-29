@@ -6,26 +6,7 @@ import { useAppSelector } from '../../hooks/redux';
 import CartGood from './CartGood/CartGood'
 
 const Cart: React.FC = () =>  {
-    //const dispatch = useAppDispatch();
     const { items , totalPrice, totalCount} = useAppSelector(state => state.cartReducer);
- 
-    //     setCart((prevCart) => {
-
-    //         const finalQuantity = validatedString === '' ? 1 : valueNumber;
-
-    //         return prevCart.map(item =>{
-    //             if(item.id === id){
-    //                 return { 
-    //                     ...item,
-    //                     quantity: finalQuantity,
-    //                     totalPrice: finalQuantity * item.price,
-    //                 }
-    //             } 
-    //             return item
-    //         });
-    //     });
-    // }
-
 
     return (
         <section className={s.section_cart}>

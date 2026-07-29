@@ -2,19 +2,33 @@ import type { AppDispatch } from "../store";
 import FilterService from "../../services/api";
 import { filterSlice } from '../slices/filterSlicer'
 
-export const fetchCurrentFilter =
-  (
+interface FetchFilterParams {
     page: number,
     sort?: string,
     searchValue?: string,
-    size?: string,//number
+    size?: string,
     color?: string,
-    sex?: number,//string
+    sex?: number,
+    fromHome?: boolean,
+    rate?: number,
+}
+
+export const fetchCurrentFilter =
+  (
+    params: FetchFilterParams
+    // page: number,
+    // sort?: string,
+    // searchValue?: string,
+    // size?: string,
+    // color?: string,
+    // sex?: number,
+    // fromHome?: boolean,
+    // rate?: number,
   ) =>
   async (dispatch: AppDispatch) => {
     try {
       dispatch(filterSlice.actions.fetchFilter());
-      const { res, hasActiveFilters } = await FilterService.getFilteredProducts({ page, sort, searchValue, size, color, sex });
+      const { res, hasActiveFilters } = await FilterService.getFilteredProducts(params);//({ page, sort, searchValue, size, color, sex, fromHome});
       
       dispatch(filterSlice.actions.fetchFilterSuccess({
         items: res.data,
@@ -49,27 +63,4 @@ export const fetchCurrentFilter =
           }));
       }
   }
-    // try {
-    //     dispatch(filterSlice.actions.fetchFilter())
-    //     const {res, hasActiveFilters} = await FilterService.getFilteredProducts({page, sort,searchValue, size, color, sex});
-    //     if (res.status >= 200 && res.status < 400) {
-    //         dispatch(filterSlice.actions.fetchFilterSuccess({
-    //           items: res.data,
-    //           status: res.status,
-    //           message: res.statusText || "OK",
-    //           hasActiveFilters: hasActiveFilters, 
-    //          // totalCount: Number(res.headers['x-total-count']) || 0
-    //         }))//res
-    //     // }else if( res.status === 404) {//not found
-    //     //   //not found
-    //     }
-    //     else {
-    //         dispatch(filterSlice.actions.fetchFilterError(res))
-    //         console.log('here1')
-    //     }
-    // } catch(err: any) {
-    //     alert('Unexpected error, please try again')
-    //     console.log(err);
-    //     console.log('here2.Catch')
-    // }
   };

@@ -43,16 +43,8 @@ const Catalog = () => {
     ? items.slice((page - 1) * 8, page * 8)
     : items;
 
-  // const pageCount = isClientPagination ? Math.ceil(items.length / 8) : Math.ceil(totalCount / 8);
-
-  //   const filteredGoods = useMemo(() => {
-  //     return GOODS.filter((item) => {
-  //       return item.price >= priceRange[0] && item.price <= priceRange[1];
-  //     });
-  //   }, [priceRange])
-
   useEffect(() => {
-    dispatch(fetchCurrentFilter(page, sort, searchValue, size, color, sex));
+    dispatch(fetchCurrentFilter({page, sort, searchValue, size, color, sex}));
   }, [page, sort, searchValue, size, color, sex, dispatch]);
 
   return (

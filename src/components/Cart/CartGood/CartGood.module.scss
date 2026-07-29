@@ -3,7 +3,6 @@
 .good {
     display: grid;
     grid-template-columns: 1fr repeat(2, 3fr) repeat(2, 1.5fr) 0.5fr;
-    //column-gap: 30px;
     place-items: center;
     &__img {
         width: 180px;

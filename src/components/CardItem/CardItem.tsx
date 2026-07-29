@@ -4,13 +4,6 @@ import type { Item } from "../../store/types/types"
 import { useNavigate } from "react-router";
 import { openDetails } from "../../store/slices/detailSlicer";
 
-//interface itemProps {
-  // id: number;
-  // title: string;
-  // imageUrl: string;
-  // price: number;
-//}
-
 const CardItem = ({ ...item }: Item) => {//id, title, imageUrl, price
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

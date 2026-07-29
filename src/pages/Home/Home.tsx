@@ -1,5 +1,5 @@
 import s from "./Home.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -12,13 +12,30 @@ import HeroImg from "../../assets/shoes/shoeHero.png";
 import ArrowLeftImg from "../../assets/icons/arrowLeft.svg";
 import ArrowRightImg from "../../assets/icons/arrowRight.svg";
 
-import { COMPANIES, GOODS, CUSTOMERS } from "../../services/contentData";
+import { COMPANIES, CUSTOMERS } from "../../services/contentData";//GOODS
 import CardItem from "../../components/CardItem/CardItem";
 import CardReview from "../../components/CardReview/CardReview";
+import Skeleton from "../../components/Skeleton/Skeleton";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { fetchCurrentFilter } from "../../store/thunks/fetchFilter";
+import { setHomeRate } from "../../store/slices/filterSlicer";
 
 const Homepage = () => {
+  
   const navigate = useNavigate();
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const dispatch = useAppDispatch();
+  const {isLoading, items, response, page } =  useAppSelector((state) => state.filterReducer);
+
+  useEffect(() => {
+    dispatch(setHomeRate(true));
+  }, [dispatch]);
+
+  useEffect(() => {
+      dispatch(fetchCurrentFilter({ page, fromHome: true })); 
+    }, [ page, dispatch]);
+
   return (
     <>
       <div className={s.hero}>
@@ -58,7 +75,18 @@ const Homepage = () => {
         body={
           <div className={s.topSelling}>
             <div className={s.topSelling__content}>
-              {GOODS.map((item) => (
+              {isLoading ? (
+                  [...new Array(4)].map((_, index) => <Skeleton key={index} />)
+                ) : response.status === 404 ? (
+                  <div className={s.content__no_result}>
+                    <h2>No result</h2>
+                  </div>
+                ) : (
+                  items.map((item) => (
+                    <CardItem key={item.id} {...item} />
+                  ))
+                )}
+              {/* {GOODS.map((item) => (
                 <CardItem
                  {...item}
                   // key={item.id}
@@ -66,7 +94,7 @@ const Homepage = () => {
                   // src={item.src}
                   // price={item.price}
                 />
-              ))}
+              ))} */}
             </div>
             <div className={s.topSelling__btn}>
               <Button title="View all" onClick={() => navigate("/catalog")} />
