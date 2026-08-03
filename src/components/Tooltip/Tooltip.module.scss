@@ -1,0 +1,56 @@
+@use "../../styles/mixins.scss" as *;
+
+.Tooltip {
+  position: relative;
+//   @include flex-hybrid(center, center);
+//   flex-direction: row;
+//   max-width: 100%;
+  button {
+    @include flex-hybrid(center, center);
+    border: 1px solid var(--black);
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    background: transparent;
+
+  }
+
+  &_CenterContainer {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 5px);
+    transform: translateX(-50%);
+    @include flex-hybrid(center, center);
+    border: 1px solid var(--black);
+    border-radius: 7px;
+    background-color: var(--white);
+    z-index: 10;
+    &__right {
+        bottom: unset;  
+        top: 50%;
+        bottom: auto;
+        left: calc(100% + 5px);
+        transform: translateY(-50%);
+    }
+  }
+  &_Content {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    white-space: nowrap;
+  }
+  &_Transition-enter {
+    opacity: 0;
+  }
+  &_Transition-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-in-out;
+  }
+  &_Transition-exit {
+    opacity: 1;
+  }
+  &_Transition-exit-active {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+  }
+}

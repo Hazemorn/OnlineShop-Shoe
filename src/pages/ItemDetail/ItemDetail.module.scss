@@ -50,4 +50,12 @@
             max-width: 100px;
         }
     }
+    &__add {
+        position: relative;
+        p {
+            position: absolute;
+            bottom: 60px;
+            left: 280px;
+        }
+    }
 }

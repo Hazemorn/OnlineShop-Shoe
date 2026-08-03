@@ -4,6 +4,7 @@ import { SIZES, COLOURS, SEXES } from "../../services/contentData";
 import filterImg from "../../assets/icons/filter.svg";
 import { setSize, setColor, setSex } from '../../store/slices/filterSlicer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Tooltip from '../Tooltip/Tooltip';
 
 
 const Filter = React.memo(() => {
@@ -24,7 +25,9 @@ const Filter = React.memo(() => {
       <div className={s.filter__header}>
         <h2>Filter</h2>
         <div className={s.filter__header__reset}>
-          <p>!</p>
+          <p>
+            <Tooltip behaviour='click' children='!' placement='right' content='Click to reset all filters'/>
+          </p>
           <img src={filterImg} alt={filterImg} loading="lazy" onClick={()=>filterReset()}/>
         </div>
        

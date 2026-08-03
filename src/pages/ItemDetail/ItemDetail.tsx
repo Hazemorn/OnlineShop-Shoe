@@ -5,6 +5,7 @@ import { addItem } from "../../store/slices/cartSlicer";
 import {SEXES} from '../../services/contentData'
 import Button from '../../components/Button/Button';
 import type { Item } from '../../store/types/types';
+import Tooltip from '../../components/Tooltip/Tooltip';
 
 const ItemDetail = () => {
     const dispatch = useAppDispatch();
@@ -96,7 +97,12 @@ const ItemDetail = () => {
                     <button onClick = {() => increase()} className={s.counter__increase}>+</button>
                 </div>
             </div>
-            <Button isDisabled={!selectedSize} onClick={onClickAddCart} title='Add to cart'></Button>
+            <div className={s.detail__add}>
+                <p>
+                    <Tooltip behaviour='click' children='!' placement='right' content='Please select a size before adding shoes'/>
+                </p>
+                <Button isDisabled={!selectedSize} onClick={onClickAddCart} title='Add to cart'></Button>
+            </div>
         </div>
         
     

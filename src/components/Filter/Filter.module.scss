@@ -19,14 +19,8 @@
                 position: absolute;
                 left: 25px; 
                 bottom: 25px;
-                @include flex-hybrid(center, center);
-                border: 1px solid var(--black);
-                border-radius: 50%;
-                width: 17px;   
-                height: 17px;
-                :hover {
-                
-                }
+                width: fit-content;
+                white-space: nowrap;
             }
         }
     }
