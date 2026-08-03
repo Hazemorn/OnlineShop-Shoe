@@ -29,7 +29,6 @@ https://github.com/user-attachments/assets/c8b744a7-34aa-42a8-a10a-72a01ba88757
 - [ ] Add animation.
 - [ ] Add payment.
 - [ ] Fix filtering (MockApi issue).
-- [ ] Add tooltips
 - [ ] Mobile and tablet adaptive
 - [ ] Optimize and refactor CSS code for better maintainability.
 - [ ] Code Splitting, React Loadable
