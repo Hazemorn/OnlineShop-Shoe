@@ -9,8 +9,25 @@
     gap: 15px;
     &__header {
         @include flex-hybrid(space-between, center);
-        img {
-            cursor: pointer;
+        &__reset {
+            position: relative;
+            img {
+                cursor: pointer;
+                height: 30px;
+            }
+            p {
+                position: absolute;
+                left: 25px; 
+                bottom: 25px;
+                @include flex-hybrid(center, center);
+                border: 1px solid var(--black);
+                border-radius: 50%;
+                width: 17px;   
+                height: 17px;
+                :hover {
+                
+                }
+            }
         }
     }
     &__price, &__size, &__color, &__sex {

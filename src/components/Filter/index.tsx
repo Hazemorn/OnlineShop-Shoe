@@ -1,24 +1,33 @@
+import React from 'react';
 import s from './Filter.module.scss'
 import { SIZES, COLOURS, SEXES } from "../../services/contentData";
 import filterImg from "../../assets/icons/filter.svg";
 import { setSize, setColor, setSex } from '../../store/slices/filterSlicer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
-const Filter = () => {
-  const dispatch = useAppDispatch();
-  const { size, color, sex } = useAppSelector(state => state.filterReducer);
 
+const Filter = React.memo(() => {
+  
+  const dispatch = useAppDispatch();
+  // const { size, color, sex } = useAppSelector(state => state.filterReducer);
+  const size = useAppSelector(state => state.filterReducer.size);
+  const color = useAppSelector(state => state.filterReducer.color);
+  const sex = useAppSelector(state => state.filterReducer.sex);
   const filterReset = () => {
     dispatch(setSize(null));
     dispatch(setColor(null));
     dispatch(setSex(1));//"both"
-  }
+  };
   return ( 
 
       <div className={s.filter}>
       <div className={s.filter__header}>
         <h2>Filter</h2>
-        <img src={filterImg} alt={filterImg} loading="lazy" onClick={()=>filterReset()}/>
+        <div className={s.filter__header__reset}>
+          <p>!</p>
+          <img src={filterImg} alt={filterImg} loading="lazy" onClick={()=>filterReset()}/>
+        </div>
+       
       </div>
       {/* <div className={s.filter__price}>
         <h4>Price:</h4>
@@ -70,6 +79,6 @@ const Filter = () => {
       </div>
     </div>
     );
-}
+});
 
 export default Filter;

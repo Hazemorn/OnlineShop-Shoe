@@ -1,3 +1,4 @@
+import React from 'react';
 import s from './CartFooter.module.scss'
 import trashCanImg from '../../../assets/icons/trash-can.svg';
 import { useAppDispatch } from '../../../hooks/redux';
@@ -8,7 +9,7 @@ interface FooterProps {
     totalPrice: number;
 }
 
-const CartFooter: React.FC<FooterProps> = ({...total}) => {
+const CartFooter: React.FC<FooterProps> = React.memo(({...total}) => {
     const dispatch = useAppDispatch();
     const {totalCount, totalPrice} = total;
 
@@ -21,6 +22,6 @@ const CartFooter: React.FC<FooterProps> = ({...total}) => {
             <div className={s.cart_footer__cost}>$ {totalPrice}</div>
         </footer>
      );
-}
+});
  
 export default CartFooter;

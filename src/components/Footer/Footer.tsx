@@ -1,10 +1,11 @@
+import React from 'react';
 import s from "./Footer.module.scss";
 import { NavLink } from "react-router";
 //import Logo from '../../assets/logo.svg?react';
 import instagramImg from "../../assets/socials/instagram.svg";
 import facebookImg from "../../assets/socials/facebook.svg";
 
-const Footer = () => {
+const Footer = React.memo(() => {
   return (
     <footer className={s.footer}>
       <div className={s.footer__wrapper}>
@@ -56,6 +57,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
 
 export default Footer;

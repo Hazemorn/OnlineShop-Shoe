@@ -1,6 +1,7 @@
+import React from 'react';
 import s from './CartHeader.module.scss';
 
-const CartHeader = () => {
+const CartHeader = React.memo(() => {
     return (  
         <header className={s.cart_header}>
             <div className={s.cart_header__title}><h4>Name</h4></div>
@@ -9,6 +10,6 @@ const CartHeader = () => {
             <div className={s.cart_header__cost}><h4>Price</h4></div>
         </header>
     );
-}
+});
  
 export default CartHeader;

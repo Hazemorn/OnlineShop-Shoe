@@ -1,16 +1,34 @@
 import s from './ItemDetail.module.scss';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { useAppDispatch, useAppSelector, } from "../../hooks/redux";
 import { addItem } from "../../store/slices/cartSlicer";
 import {SEXES} from '../../services/contentData'
 import Button from '../../components/Button/Button';
+import type { Item } from '../../store/types/types';
 
 const ItemDetail = () => {
     const dispatch = useAppDispatch();
     const [selectedSize, setSelectedSize] = useState<number | null>(null);
     const [count, setCount] = useState<number>(1);
-    const { good } = useAppSelector(state => state.detailReducer);
-    
+    const {good: reduxGood} = useAppSelector(state => state.detailReducer);
+    const [good, setGood] = useState<Item | null>(null);
+
+    useEffect(() => {
+        if (reduxGood) {
+            setGood(reduxGood);
+            localStorage.setItem('itemDetail', JSON.stringify(reduxGood));
+        } else {
+            try {
+                const savedItem = localStorage.getItem('itemDetail');
+                if (savedItem) {
+                    setGood(JSON.parse(savedItem));
+                }
+            } catch (error) {
+                console.error("localStorage itemDetail error", error);
+            }
+        }
+    }, [reduxGood]);
+
     if (!good) {
         return <div className={s.loading}>Loading product details...</div>;
     }
@@ -20,6 +38,7 @@ const ItemDetail = () => {
     const sizeArray = typeof size === 'string' 
     ? size.split(" ").filter(Boolean).map(Number) 
     : size;
+
 
     const onClickAddCart = () => {
         if (!selectedSize) {
@@ -31,6 +50,19 @@ const ItemDetail = () => {
             size: selectedSize,
             count: count
         }; 
+
+        const savedItems = localStorage.getItem('cart');
+        const cartItems = savedItems ? JSON.parse(savedItems) : [];
+        const existingItemIndex = cartItems.findIndex(
+            (i: any) => i.id === item.id && i.size === item.size
+        );
+
+        if (existingItemIndex !== -1) {
+            cartItems[existingItemIndex].count += count;
+        } else {
+            cartItems.push(item);
+        }
+        localStorage.setItem('cart', JSON.stringify(cartItems));
         dispatch(addItem(item))
     }
     function increase () {

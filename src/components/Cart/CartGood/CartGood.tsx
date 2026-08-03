@@ -1,16 +1,18 @@
+import React from 'react';
 import s from './CartGood.module.scss';
 import { useAppDispatch } from '../../../hooks/redux';
 import { addItem, minusItem, removeItem } from '../../../store/slices/cartSlicer';
 import { SEXES } from '../../../services/contentData';
 import trashCanImg from '../../../assets/icons/trash-can.svg'
+//import useWhyDidYouUpdate from 'ahooks/lib/useWhyDidYouUpdate';
 
 interface GoodProps {
     item: any; 
 }
 
-const CardGood = ({item}:GoodProps) => {
+const CardGood = React.memo(({item}:GoodProps) => {
     const dispatch = useAppDispatch();
-    
+    //useWhyDidYouUpdate('CardGood', { item });
     const {id, title, price, size, imageUrl, color, sex, count } = item;
 
     const handleIncrease = () => {
@@ -48,6 +50,6 @@ const CardGood = ({item}:GoodProps) => {
             
         </section>
     );
-};
+});
  
 export default CardGood;

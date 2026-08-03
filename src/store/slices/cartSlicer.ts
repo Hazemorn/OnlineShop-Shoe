@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getItemsFromLS } from "../../utils/getItemsFromLS";
+import { calcTotalPrice } from "../../utils/calcTotalPrice";
+import { calcTotalCount } from "../../utils/calcTotalCount";
 
 export interface CartItem {
   id: number;
@@ -18,28 +21,19 @@ export interface InitState {
   totalCount: number;
 }
 
+const {items, totalCount, totalPrice} = getItemsFromLS();
+
 const initCart: InitState = {
-  totalPrice: 0,
-  items: [],
-  totalCount: 0,
+  totalPrice: totalPrice,
+  items: items,
+  totalCount: totalCount,
 };
 
-const calcTotalPrice = (items: CartItem[]) => {
-  return items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
-};
-
-const calcTotalCount = (items: CartItem[]) => {
-  return items.reduce((sum, obj) => obj.count + sum, 0);
-};
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState: initCart,
   reducers: {
-    // addItem (state, action) {
-    //     state.items.push(action.payload);
-    //     state.totalPrice = state.items.reduce((sum, obj) => {return obj.price +  sum}, 0)
-    // },
     addItem(state, action) {
       const findItem = state.items.find(
         (obj) =>
@@ -75,12 +69,13 @@ export const cartSlice = createSlice({
       );
       state.totalPrice = calcTotalPrice(state.items);
       state.totalCount = calcTotalCount(state.items);
-
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
     clearItems(state) {
       state.items = [];
       state.totalPrice = 0;
       state.totalCount = 0;
+      localStorage.setItem('cart', JSON.stringify([]));
     },
   },
 });

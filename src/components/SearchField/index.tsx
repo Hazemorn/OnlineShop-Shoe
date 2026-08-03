@@ -1,3 +1,4 @@
+import React from 'react';
 import s from "./SearchField.module.scss";
 import { useState, useRef } from "react"; //useCallback
 import magnifierImg from "../../assets/icons/magnifier.svg";
@@ -8,7 +9,7 @@ interface SearchFieldProps {
   onSearch: (value: string) => void;
 }
 
-const SearchField = ({ onSearch }: SearchFieldProps) => {
+const SearchField = React.memo(({ onSearch }: SearchFieldProps) => {
 
   const [inputValue, setInputValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -63,6 +64,6 @@ const SearchField = ({ onSearch }: SearchFieldProps) => {
       </button>
     </form>
   );
-};
+});
 
 export default SearchField;

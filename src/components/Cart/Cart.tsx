@@ -1,12 +1,12 @@
-//import {useMemo, useState} from 'react';
 import s from './Cart.module.scss';
 import CartFooter from './CartFooter/CartFooter';
 import CartHeader from './CartHeader/CartHeader';
 import { useAppSelector } from '../../hooks/redux';
 import CartGood from './CartGood/CartGood'
 
+
 const Cart: React.FC = () =>  {
-    const { items , totalPrice, totalCount} = useAppSelector(state => state.cartReducer);
+    const { items, totalPrice, totalCount} = useAppSelector(state => state.cartReducer);
 
     return (
         <section className={s.section_cart}>

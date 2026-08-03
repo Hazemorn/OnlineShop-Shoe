@@ -1,3 +1,4 @@
+import React from 'react';
 import s from "./Сatalog.module.scss";
 import { useState, useEffect } from "react";
 
@@ -21,7 +22,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchCurrentFilter } from "../../store/thunks/fetchFilter";
 import { limit } from "../../services/api";
 
-const Catalog = () => {
+const Catalog = React.memo(() => {
   const dispatch = useAppDispatch();
   const {
     sort,
@@ -95,6 +96,6 @@ const Catalog = () => {
       <GetInTouch />
     </div>
   );
-};
+});
 
 export default Catalog;
