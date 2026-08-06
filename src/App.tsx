@@ -1,46 +1,49 @@
-import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router"
+import { lazy, useEffect, Suspense } from "react";
+import { Route, Routes, useLocation } from "react-router";
+
 import Header from "./components/Header/Header";
-import Homepage from './pages/Home/Home'
-import Catalog from "./pages/Catalog/Catalog";
-import Contact from "./pages/Contact/Contact";
 import Footer from "./components/Footer/Footer";
-import Cart from "./components/Cart/Cart";
-import Product from "./pages/Product/Product";
-import TermsConditions from "./pages/TermsConditions/TermsConditions";
-import Privacy from "./pages/Privacy/Privacy";
 import NotFoundBlock from "./components/NotFoundBlock";
-import ItemDetail from "./pages/ItemDetail/ItemDetail";
+
+const Homepage = lazy(() => import("./pages/Home/Home"));
+const Catalog = lazy(() => import("./pages/Catalog/Catalog"));
+const Contact = lazy(() => import("./pages/Contact/Contact"));
+const Cart = lazy(() => import("./components/Cart/Cart"));
+const Product = lazy(() => import("./pages/Product/Product"));
+const TermsConditions = lazy(
+  () => import("./pages/TermsConditions/TermsConditions")
+);
+const Privacy = lazy(() => import("./pages/Privacy/Privacy"));
+const ItemDetail = lazy(() => import("./pages/ItemDetail/ItemDetail"));
 
 function App() {
-  const location = useLocation()
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const block = document.getElementById("#top");
-    if (block) {
-        block.scrollIntoView({ behavior: 'smooth' });
-    }
-}, [location.pathname]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
+
   return (
     <>
-     <div id={'#top'} className='container'>
-        <Header/>
-        <Routes>
-          <Route index element={<Homepage/>}/>
-          <Route path="catalog" element={<Catalog/>}/>
-          <Route path="contact" element={<Contact/>}/>
-          <Route path="cart" element={<Cart/>}/>
-          <Route path="product" element={<Product/>}/>
-          <Route path="privacy" element={<Privacy/>}/>
-          <Route path="terms&conditions" element={<TermsConditions/>}/>
-          <Route path="details" element={<ItemDetail/>}/>
-          <Route path="*" element={<NotFoundBlock/>}/>
-        </Routes>
-        <Footer/>
-     </div>
+      <div id={"#top"} className="container">
+        <Header />
+        <Suspense fallback={<div className="spinner">Loading...</div>}>
+          <Routes>
+            <Route index element={<Homepage />} />
+            <Route path="catalog" element={<Catalog />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="product" element={<Product />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms&conditions" element={<TermsConditions />} />
+            <Route path="details" element={<ItemDetail />} />
+            <Route path="*" element={<NotFoundBlock />} />
+          </Routes>
+        </Suspense>
+        <Footer />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
- 
+export default App;

@@ -1,21 +1,23 @@
+import React from 'react';
 import s from "./Home.module.scss";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 
-import GetInTouch from "../../components/GetInTouch";
-import Sector from "../../components/Sector";
-import Button from "../../components/Button/Button";
+const GetInTouch = React.lazy(() => import("../../components/GetInTouch"));
+const Sector = React.lazy(() => import("../../components/Sector"));
+const Button = React.lazy(() => import("../../components/Button/Button"));
+
+const CardItem = React.lazy(() => import("../../components/CardItem/CardItem"));
+const CardReview = React.lazy(() => import("../../components/CardReview/CardReview"));
+import Skeleton from "../../components/Skeleton/Skeleton";
 
 import HeroImg from "../../assets/shoes/shoeHero.png";
 import ArrowLeftImg from "../../assets/icons/arrowLeft.svg";
 import ArrowRightImg from "../../assets/icons/arrowRight.svg";
 
 import { COMPANIES, CUSTOMERS } from "../../services/contentData";//GOODS
-import CardItem from "../../components/CardItem/CardItem";
-import CardReview from "../../components/CardReview/CardReview";
-import Skeleton from "../../components/Skeleton/Skeleton";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchCurrentFilter } from "../../store/thunks/fetchFilter";

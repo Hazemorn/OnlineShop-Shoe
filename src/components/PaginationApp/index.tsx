@@ -7,18 +7,25 @@ interface PaginationProps {
   disable?: boolean;
 }
 
+
 const PaginationApp = ({
   currentPage = 1,
   onChangePage = () => {},
   pageCount = 3,
   disable
 }: PaginationProps) => {
+
+  const onClickDownHandler = () => onChangePage(currentPage - 1);
+  
+  const onClickUpHandler = () => onChangePage(currentPage + 1);
+  
+
   return (
     <div className={s.root}>
       <div className={s.root__wrapper}>
         <button
           disabled={currentPage === 1}
-          onClick={() => onChangePage(currentPage - 1)}
+          onClick={onClickDownHandler}
           className={s.arrow}
           style={{ color: currentPage === 1 ? 'var(--greyLite)' : 'var(--black)'}}
         >
@@ -40,7 +47,7 @@ const PaginationApp = ({
 
         <button
           disabled={currentPage === pageCount || disable}
-          onClick={() => onChangePage(currentPage + 1)}
+          onClick={onClickUpHandler}
           className={s.arrow}
           style={{ color: currentPage === pageCount || disable ? 'var(--greyLite)' : 'var(--black)'}}
         >

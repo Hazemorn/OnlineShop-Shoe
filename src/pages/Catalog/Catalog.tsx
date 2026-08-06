@@ -2,10 +2,11 @@ import React from 'react';
 import s from "./Сatalog.module.scss";
 import { useState, useEffect } from "react";
 
-import GetInTouch from "../../components/GetInTouch";
-import Sector from "../../components/Sector";
-import CardItem from "../../components/CardItem/CardItem";
 import Skeleton from "../../components/Skeleton/Skeleton";
+
+const GetInTouch = React.lazy(() => import("../../components/GetInTouch"));
+const Sector = React.lazy(() => import("../../components/Sector"));
+const CardItem = React.lazy(() => import("../../components/CardItem/CardItem"));
 
 import { OPTIONS } from "../../services/contentData";
 
@@ -14,9 +15,10 @@ import {
   setPage,
   setSearchValue,
 } from "../../store/slices/filterSlicer";
-import SearchField from "../../components/SearchField";
-import Filter from "../../components/Filter";
+
 import PaginationApp from "../../components/PaginationApp";
+import SearchField from "../../components/SearchField";
+const Filter = React.lazy(() => import("../../components/Filter"));
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchCurrentFilter } from "../../store/thunks/fetchFilter";

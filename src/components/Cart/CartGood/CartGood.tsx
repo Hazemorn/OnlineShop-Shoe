@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import s from './CartGood.module.scss';
 import { useAppDispatch } from '../../../hooks/redux';
 import { addItem, minusItem, removeItem } from '../../../store/slices/cartSlicer';
@@ -15,15 +15,20 @@ const CardGood = React.memo(({item}:GoodProps) => {
     //useWhyDidYouUpdate('CardGood', { item });
     const {id, title, price, size, imageUrl, color, sex, count } = item;
 
-    const handleIncrease = () => {
+    const handleIncrease = useCallback(() => {
         dispatch(addItem({id, size}));
-    };
+    }, [dispatch, size]);
 
-    const handleDecrease = () => {
+    const handleDecrease = useCallback(() => {
         if (count > 1) {
             dispatch(minusItem({id, size}));
         }
-    }
+    },[dispatch, count, size]);
+
+    const handleRemove = useCallback(() => {
+        dispatch(removeItem({ id, size }));
+      }, [dispatch, id, size]);
+
     return (
         <section key={`${id}-${size}`} className={s.good}>
             <div className={s.good__img}><img src={imageUrl} alt={imageUrl} loading='lazy'/></div>
@@ -44,7 +49,7 @@ const CardGood = React.memo(({item}:GoodProps) => {
             <div className={s.good__price}>
                 {price}
             </div>
-            <div className={s.good__garbage} onClick={() => dispatch(removeItem({id, size}))}>
+            <div className={s.good__garbage} onClick={handleRemove}>
                 <img src={trashCanImg} alt='trashCan' loading='lazy'/>
             </div>
             
